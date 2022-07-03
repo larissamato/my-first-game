@@ -14,7 +14,7 @@ BackgroundX=0
 BackgroundY=0
 
 
-PersonX=0
+PersonX=20
 PersonY=380
 Speed=2
 
@@ -57,6 +57,8 @@ imagem10=LoadImage("pedra.png")
 imagem11=LoadImage("arvore.png")
 imagem12=LoadImage("rose.png")
 imagem13=LoadImage("ataque.png")
+instru=LoadImage("instrucoes.png")
+
 
 barril= CreateSprite(imagem1)
 pedra= CreateSprite(imagem10)
@@ -94,7 +96,7 @@ baoba17= CreateSprite(semente)
 baoba18= CreateSprite(semente)
 baoba19= CreateSprite(semente)
 baoba20= CreateSprite(semente)
-
+instrucoes=CreateSprite(instru)
 
 SetSpriteSize(platform1,1024,60)	
 SetSpriteSize(barril,46,49)
@@ -127,6 +129,8 @@ SetSpriteSize(baoba17,18,22)
 SetSpriteSize(baoba18,18,22)
 SetSpriteSize(baoba19,18,22)
 SetSpriteSize(baoba20,18,22)
+SetSpriteSize(instrucoes,200,100)
+
 
 SetSpritePosition(baoba1, FloorX+70,FloorY-32)
 SetSpritePosition(baoba2, FloorX+122,FloorY-200)
@@ -164,6 +168,7 @@ SetSpritePosition (platform10,FloorX+950, FloorY-340)
 SetSpritePosition (platform11,FloorX+950, FloorY-395)
 SetSpritePosition (platform12,FloorX+750, FloorY-420)
 SetSpritePosition (rose,FloorX+750, FloorY-462)
+SetSpritePosition (instrucoes,FloorX+30, FloorY-330)
 
 CreateSprite(20,0) //snake
 SetSpriteSize(20,50,52) //snake
@@ -244,14 +249,14 @@ endif
 SetSpritePosition(bulletsLeft, leftB, 550)
 SetSpritePosition(bulletsRight, rightB, 550)
 
-		if leftB>400
-			leftB=leftB-6
+		if leftB>300
+			leftB=leftB-5
 			if GetSpriteCollision (2,bulletsLeft) = 1
 			DeleteSprite(bulletsLeft)
 			vida=vida-1
 			endif
 			
-		elseif leftB<401
+		elseif leftB<300
 			DeleteSprite(bulletsLeft)
 		endif
 		
@@ -269,7 +274,7 @@ SetSpritePosition(bulletsRight, rightB, 550)
 // snake 2
 		if Snake2X>countLeft2
 		Snake2X=Snake2X-1
-			if Snake2X-100 = PersonX
+			if Snake2X-80 = PersonX
 			leftB2=Snake2X
 			bulletsLeft2=CreateSprite(imagem13)
 			SetSpriteColor(bulletsLeft2, 0,255,0,255)
@@ -285,7 +290,7 @@ SetSpritePosition(bulletsRight, rightB, 550)
 		
 		elseif Snake2X<countRight2
 		Snake2X=Snake2X+1
-			if Snake2X+100 = PersonX
+			if Snake2X+80 = PersonX
 			rightB2=Snake2X
 			bulletsRight2=CreateSprite(imagem13)
 			SetSpriteColor(bulletsRight2, 0,255,0,255)
@@ -343,6 +348,14 @@ SetSpritePosition(bulletsRight2, rightB2, 170)
 				
 		  endif
 		 endif
+		 
+//person 
+		if PersonX > 1000 
+			PersonX=PersonX-3
+		endif
+		if PersonX < 5
+			PersonX=PersonX+3
+		endif
 
 // Platform			
 		if GetSpriteCollision(2,platform1)=1 or Jump=1 
@@ -389,6 +402,7 @@ SetSpritePosition(bulletsRight2, rightB2, 170)
 		
 		If GetRawKeyPressed (65)
 			Jump=1
+			DeleteSprite(instrucoes)
 			endif
 			
 		If Jump =1
